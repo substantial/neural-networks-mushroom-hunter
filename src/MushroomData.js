@@ -31,12 +31,14 @@ class MushroomData {
       inputs: [],
       labels: [],
     }
+    this.inputSize = 0
   }
 
   async loadData() {
-    let response = await this.parseData()
+    let response = await Papa.parseAsync('./mushrooms.csv')
     let data = shuffle(response.data)
     let [inputs, labels] = processData(data)
+    this.inputSize = inputs[0].length
     ;[
       this.train.inputs,
       this.train.labels,
@@ -45,12 +47,6 @@ class MushroomData {
       this.validation.inputs,
       this.validation.labels,
     ] = this.segmentData(inputs, labels)
-  }
-
-  async parseData() {
-    let response = await Papa.parseAsync('./mushrooms.csv')
-    console.log(response)
-    return response
   }
 
   segmentData(inputs, labels) {
