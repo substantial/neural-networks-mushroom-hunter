@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Provider, Subscribe, Container } from 'unstated'
 import { ResultsContainer } from './ResultsContainer.js'
+import { Flex, Box, Divider } from 'rebass'
 
 export function TrainingReport(props) {
   const results = props.trainingReport
@@ -9,13 +10,12 @@ export function TrainingReport(props) {
   })
   return (
     <div>
-      <ul>
-        {resultItems.map((result, index) => (
-          <li key={index}>
-            {result.name}, {result.accuracy}%
-          </li>
-        ))}
-      </ul>
+      {resultItems.map((result, index) => (
+        <Flex key={index}>
+          <Box width={1 / 2}>{result.name}</Box>
+          <Box width={1 / 2}> {result.accuracy}%</Box>
+        </Flex>
+      ))}
     </div>
   )
 }
@@ -23,11 +23,14 @@ export function TrainingReportList() {
   return (
     <Subscribe to={[ResultsContainer]}>
       {resultsContainer => (
-        <div>
+        <Box>
           {resultsContainer.state.results.map((result, index) => (
-            <TrainingReport key={index} trainingReport={result} />
+            <Box py={10} width={1}>
+              <TrainingReport key={index} trainingReport={result} />
+              <Divider />
+            </Box>
           ))}
-        </div>
+        </Box>
       )}
     </Subscribe>
   )
