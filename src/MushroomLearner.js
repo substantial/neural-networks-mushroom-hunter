@@ -1,7 +1,8 @@
 import NeuralNetwork from './lib/nn.js'
 import MushroomData from './MushroomData.js'
+import { Training } from './TrainingReport.js'
 
-const numHiddenNodes = 17
+const numHiddenNodes = 2
 const numOutputNodes = 1
 
 class MushroomLearner {
@@ -26,29 +27,30 @@ class MushroomLearner {
   }
 
   trainEpochs(numEpochs, data) {
-    let results = []
+    let training = new Training(this.brain)
+
     for (let e = 0; e < numEpochs; e++) {
       for (let i = 0; i < data.train.inputs.length; i++) {
         let features = data.train.inputs[i]
-        let y = data.train.labels[i]
-        this.brain.train(features, [y])
+        let label = data.train.labels[i]
+        this.brain.train(features, [label])
       }
 
-      let result = this.test(
+      let [loss, accuracy] = this.test(
         data.validation.inputs,
-        data.validation.labels,
-        'Epoch ' + (e + 1)
+        data.validation.labels
       )
-      results.push(result)
+
+      training.addValidation(loss, accuracy)
       // epoch, mean squared error, accuracy
     }
 
-    let result = this.test(data.test.inputs, data.test.labels, 'Test')
-    results.push(result)
-    return results
+    let [loss, accuracy] = this.test(data.test.inputs, data.test.labels)
+    training.addTest(loss, accuracy)
+    return training
   }
 
-  test(inputs, labels, name) {
+  test(inputs, labels) {
     // testing // TODO: how do we calculate test vs. validation error?
     let sumSquared = 0
     let numTests = 0
@@ -67,14 +69,10 @@ class MushroomLearner {
       sumSquared += error * error
       numTests++
     }
-    let result = [
-      name,
-      (sumSquared / numTests).toString().slice(0, 5),
-      (numCorrect / numTests).toString().slice(0, 5),
+    return [
+      (sumSquared / numTests).toString().slice(0, 5), // loss
+      (numCorrect / numTests).toString().slice(0, 5), // accuracy
     ]
-
-    console.log(result)
-    return result
   }
 }
 export default MushroomLearner

@@ -1,22 +1,37 @@
 import React, { Component } from 'react'
 import { Provider, Subscribe, Container } from 'unstated'
 import { ResultsContainer } from './ResultsContainer.js'
-import { Flex, Box, Divider } from 'rebass'
+import { Flex, Box, Divider, Panel, Samp, Subhead } from 'rebass'
 
 export function TrainingReport(props) {
-  const results = props.trainingReport
-  const resultItems = results.map(result => {
-    return { name: result[0], loss: result[1], accuracy: result[2] * 100 }
-  })
+  const training = props.trainingReport
+  const brain = training.brain
   return (
-    <div>
-      {resultItems.map((result, index) => (
-        <Flex key={index}>
-          <Box width={1 / 2}>{result.name}</Box>
-          <Box width={1 / 2}> {result.accuracy}%</Box>
-        </Flex>
-      ))}
-    </div>
+    <Panel>
+      <Panel.Header fontSize="2">
+        Training Completed At {training.completionTime.toTimeString()}
+      </Panel.Header>
+      <Box>
+        <Subhead fontSize="3" color="blue">
+          Test Accuracy
+        </Subhead>
+        <Subhead fontSize="5">{training.test.accuracy * 100}%</Subhead>
+        <Subhead fontSize="3" pt={10} color="blue">
+          Validations
+        </Subhead>
+        {training.validations.map((validation, index) => (
+          <Flex key={index}>
+            <Box width={1 / 2}>{validation.loss}</Box>
+            <Box width={1 / 2}> {validation.accuracy * 100}%</Box>
+          </Flex>
+        ))}
+      </Box>
+      <Panel.Footer>
+        <Samp>{brain.input_nodes}</Samp> inputs,{' '}
+        <Samp>{brain.hidden_nodes}</Samp> hidden nodes,{' '}
+        <Samp>{brain.output_nodes}</Samp> output nodes
+      </Panel.Footer>
+    </Panel>
   )
 }
 export function TrainingReportList() {
@@ -25,13 +40,29 @@ export function TrainingReportList() {
       {resultsContainer => (
         <Box>
           {resultsContainer.state.results.map((result, index) => (
-            <Box py={10} width={1}>
+            <Box py={10} width={1 / 2} mx="auto">
               <TrainingReport key={index} trainingReport={result} />
-              <Divider />
             </Box>
           ))}
         </Box>
       )}
     </Subscribe>
   )
+}
+
+export class Training {
+  constructor(brain) {
+    this.brain = brain
+    this.validations = []
+    this.test = {}
+  }
+
+  addValidation(loss, accuracy) {
+    this.validations.push({ loss: loss, accuracy: accuracy })
+  }
+
+  addTest(loss, accuracy) {
+    this.completionTime = new Date()
+    this.test = { loss: loss, accuracy: accuracy }
+  }
 }
