@@ -5,10 +5,6 @@ const numHiddenNodes = 17
 const numOutputNodes = 1
 
 class MushroomLearner {
-  constructor() {
-    this.results = []
-  }
-
   async train() {
     let data = new MushroomData()
     await data.loadData()
@@ -26,13 +22,13 @@ class MushroomLearner {
         this.brain.output_nodes
       }`
     )
-    this.trainEpochs(10, data)
-    return this.results
+    return this.trainEpochs(10, data)
   }
 
   trainEpochs(numEpochs, data) {
+    let results = []
     for (let e = 0; e < numEpochs; e++) {
-      for (let i = 0; i < data.train.inputs.lengmth; i++) {
+      for (let i = 0; i < data.train.inputs.length; i++) {
         let features = data.train.inputs[i]
         let y = data.train.labels[i]
         this.brain.train(features, [y])
@@ -41,14 +37,15 @@ class MushroomLearner {
       let result = this.test(
         data.validation.inputs,
         data.validation.labels,
-        'Epoch: ' + (e + 1) + '\t'
+        'Epoch ' + (e + 1)
       )
-      this.results.push(result)
+      results.push(result)
       // epoch, mean squared error, accuracy
     }
 
-    let result = this.test(data.test.inputs, data.test.labels, 'Test :\t\t')
-    this.results.push(result)
+    let result = this.test(data.test.inputs, data.test.labels, 'Test')
+    results.push(result)
+    return results
   }
 
   test(inputs, labels, name) {
