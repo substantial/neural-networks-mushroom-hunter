@@ -7,16 +7,24 @@ export class TrainButton extends Component {
     super(props)
     this.resultsContainer = props.resultsContainer
     this.ml = new MushroomLearner(this.onLearned)
+    this.state = { isTraining: false }
   }
 
   runTraining = async () => {
+    this.setState({ isTraining: true })
     let results = await this.ml.train()
+
     this.resultsContainer.addResults(results)
+    this.setState({ isTraining: false })
   }
 
   render() {
     return (
-      <Button bg="orange" onClick={this.runTraining}>
+      <Button
+        bg="orange"
+        disabled={this.state.isTraining}
+        onClick={this.runTraining}
+      >
         Train
       </Button>
     )
