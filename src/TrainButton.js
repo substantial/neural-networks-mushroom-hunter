@@ -21,7 +21,7 @@ export class TrainButton extends Component {
   render() {
     return (
       <Button
-        bg="orange"
+        bg="red"
         disabled={this.state.isTraining}
         onClick={this.runTraining}
       >

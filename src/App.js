@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <div className="App">
         <Rebass>
-          <Heading>Mushroom Learning</Heading>
+          <Heading>Mushroom Learning 🍄</Heading>
           <Lead>Safe to eat, or deadly poison?</Lead>
           <Divider />
           <Provider>
