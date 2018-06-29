@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Provider, Subscribe, Container } from 'unstated'
 import { ResultsContainer } from './ResultsContainer.js'
 import { Flex, Box, Divider, Panel, Samp, Subhead } from 'rebass'
+import { formatDistance } from 'date-fns'
 
 export function TrainingReport(props) {
   const training = props.trainingReport
@@ -9,7 +10,9 @@ export function TrainingReport(props) {
   return (
     <Panel>
       <Panel.Header fontSize="2">
-        Training Completed At {training.completionTime.toTimeString()}
+        {formatDistance(training.completionTime, new Date(), {
+          addSuffix: true,
+        })}
       </Panel.Header>
       <Box>
         <Subhead fontSize="3" color="blue">

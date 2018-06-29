@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "date-fns": "^2.0.0-alpha.11",
     "papaparse": "^4.5.0",
     "prettier": "^1.13.5",
     "react": "^16.4.1",
