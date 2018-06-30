@@ -8,18 +8,30 @@ export function TrainingReport(props) {
   const training = props.trainingReport
   const brain = training.brain
   const { learningRate } = training.settings
+  const accuracyFormat = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2,
+  })
+  const lossFormat = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 3,
+    maximumFractionDigits: 3,
+  })
   return (
     <Panel>
       <Panel.Header>
         <Flex width={1}>
           <Box width={1 / 2} px={2}>
-            <Subhead fontSize="5">{training.test.accuracy * 100}%</Subhead>
+            <Subhead fontSize="5">
+              {accuracyFormat.format(training.test.accuracy * 100)}%
+            </Subhead>
             <Subhead fontSize="1" color="darken">
               Test Accuracy
             </Subhead>
           </Box>
           <Box width={1 / 2} px={2}>
-            <Subhead fontSize="5">{training.test.loss}</Subhead>
+            <Subhead fontSize="5">
+              {lossFormat.format(training.test.loss)}
+            </Subhead>
             <Subhead fontSize="1" color="darken">
               Loss
             </Subhead>
@@ -32,8 +44,10 @@ export function TrainingReport(props) {
         </Subhead>
         {training.validations.map((validation, index) => (
           <Flex key={index}>
-            <Box width={1 / 2}> {validation.accuracy * 100}%</Box>
-            <Box width={1 / 2}>{validation.loss}</Box>
+            <Box width={1 / 2}>
+              {accuracyFormat.format(validation.accuracy * 100)}%
+            </Box>
+            <Box width={1 / 2}>{lossFormat.format(validation.loss)}</Box>
           </Flex>
         ))}
 

@@ -36,7 +36,7 @@ export class SettingsForm extends Component {
             value={this.settingsContainer.state.learningRate}
             onChange={this.handleInputChange}
           >
-            {[0.01, 0.03, 0.1, 0.3, 1, 3].map((val, index) => (
+            {[0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3].map((val, index) => (
               <option value={val} key={index}>
                 {val}
               </option>
