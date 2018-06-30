@@ -6,7 +6,7 @@ const numHiddenNodes = 2
 const numOutputNodes = 1
 
 class MushroomLearner {
-  async train() {
+  async train(settings) {
     let data = new MushroomData()
     await data.loadData()
 
@@ -16,18 +16,12 @@ class MushroomLearner {
       numOutputNodes
     )
 
-    this.brain.setLearningRate(0.3)
-
-    console.log(
-      `ANN Structure: ${this.brain.input_nodes}->${this.brain.hidden_nodes}->${
-        this.brain.output_nodes
-      }`
-    )
-    return this.trainEpochs(10, data)
+    this.brain.setLearningRate(settings.learningRate)
+    return this.trainEpochs(10, data, settings)
   }
 
-  trainEpochs(numEpochs, data) {
-    let training = new Training(this.brain)
+  trainEpochs(numEpochs, data, settings) {
+    let training = new Training(this.brain, settings)
 
     for (let e = 0; e < numEpochs; e++) {
       for (let i = 0; i < data.train.inputs.length; i++) {

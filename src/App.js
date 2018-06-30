@@ -6,7 +6,8 @@ import { TrainingReport, TrainingReportList } from './TrainingReport.js'
 import { ResultsContainer } from './ResultsContainer.js'
 import { TrainButton } from './TrainButton.js'
 
-import { Provider as Rebass, Heading, Lead, Divider } from 'rebass'
+import { Provider as Rebass, Heading, Lead, Divider, Flex, Box } from 'rebass'
+import { SettingsForm, SettingsContainer } from './Settings.js'
 
 class App extends Component {
   render() {
@@ -17,15 +18,29 @@ class App extends Component {
           <Lead>Safe to eat, or deadly poison?</Lead>
           <Divider />
           <Provider>
-            <Subscribe to={[ResultsContainer]}>
-              {resultsContainer => (
-                <TrainButton
-                  resultsContainer={resultsContainer}
-                  onLearned={this.updateResults}
-                />
-              )}
-            </Subscribe>
-            <TrainingReportList />
+            <Flex>
+              <Box width={1 / 2}>
+                <Subscribe to={[ResultsContainer, SettingsContainer]}>
+                  {(resultsContainer, settingsContainer) => (
+                    <TrainButton
+                      resultsContainer={resultsContainer}
+                      settingsContainer={settingsContainer}
+                      onLearned={this.updateResults}
+                    />
+                  )}
+                </Subscribe>
+                <Box>
+                  <Subscribe to={[SettingsContainer]}>
+                    {settingsContainer => (
+                      <SettingsForm settingsContainer={settingsContainer} />
+                    )}
+                  </Subscribe>
+                </Box>
+              </Box>
+              <Box width={1 / 2}>
+                <TrainingReportList />
+              </Box>
+            </Flex>
           </Provider>
         </Rebass>
       </div>
