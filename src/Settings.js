@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Label, Select, Box } from 'rebass'
+import { Label, Select, Flex, Box, Slider, Samp } from 'rebass'
 import { Container } from 'unstated'
 export class SettingsContainer extends Container {
-  state = { learningRate: 0.3 }
+  state = { learningRate: 0.3, numHiddenNodes: 4 }
 
   settings() {
     return {
       learningRate: this.state.learningRate,
+      numHiddenNodes: this.state.numHiddenNodes,
     }
   }
 }
@@ -18,7 +19,11 @@ export class SettingsForm extends Component {
 
   handleInputChange = event => {
     const target = event.target
-    const value = target.type === 'checkbox' ? target.checked : target.value
+    let value = target.type === 'checkbox' ? target.checked : target.value
+    if (target.valueAsNumber != null) {
+      value = target.valueAsNumber
+    }
+
     const name = target.name
 
     this.settingsContainer.setState({
@@ -28,8 +33,8 @@ export class SettingsForm extends Component {
 
   render() {
     return (
-      <Box>
-        <Box width={1 / 6}>
+      <Flex>
+        <Box width={2 / 6} px={10}>
           <Label>Learning Rate</Label>
           <Select
             name="learningRate"
@@ -43,7 +48,23 @@ export class SettingsForm extends Component {
             ))}
           </Select>
         </Box>
-      </Box>
+        <Box width={4 / 6} px={10}>
+          <Label>Hidden Nodes</Label>
+          <Flex>
+            <Slider
+              name="numHiddenNodes"
+              value={this.settingsContainer.state.numHiddenNodes}
+              onChange={this.handleInputChange}
+              width={8 / 10}
+              min={1}
+              max={40}
+            />
+            <Samp width={1 / 10} px={1}>
+              {this.settingsContainer.state.numHiddenNodes}
+            </Samp>
+          </Flex>
+        </Box>
+      </Flex>
     )
   }
 }

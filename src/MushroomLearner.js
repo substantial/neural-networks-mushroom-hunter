@@ -2,7 +2,6 @@ import NeuralNetwork from './lib/nn.js'
 import MushroomData from './MushroomData.js'
 import { Training } from './TrainingReport.js'
 
-const numHiddenNodes = 2
 const numOutputNodes = 1
 
 class MushroomLearner {
@@ -12,7 +11,7 @@ class MushroomLearner {
 
     this.brain = new NeuralNetwork(
       data.inputSize,
-      numHiddenNodes,
+      settings.numHiddenNodes,
       numOutputNodes
     )
 

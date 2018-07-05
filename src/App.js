@@ -18,21 +18,23 @@ class App extends Component {
           <Lead>Safe to eat, or deadly poison?</Lead>
           <Divider />
           <Provider>
-            <Flex>
+            <Flex px={10}>
               <Box width={1 / 2}>
-                <Subscribe to={[ResultsContainer, SettingsContainer]}>
-                  {(resultsContainer, settingsContainer) => (
-                    <TrainButton
-                      resultsContainer={resultsContainer}
-                      settingsContainer={settingsContainer}
-                      onLearned={this.updateResults}
-                    />
-                  )}
-                </Subscribe>
                 <Box>
                   <Subscribe to={[SettingsContainer]}>
                     {settingsContainer => (
                       <SettingsForm settingsContainer={settingsContainer} />
+                    )}
+                  </Subscribe>
+                </Box>
+                <Box>
+                  <Subscribe to={[ResultsContainer, SettingsContainer]}>
+                    {(resultsContainer, settingsContainer) => (
+                      <TrainButton
+                        resultsContainer={resultsContainer}
+                        settingsContainer={settingsContainer}
+                        onLearned={this.updateResults}
+                      />
                     )}
                   </Subscribe>
                 </Box>
