@@ -1,16 +1,38 @@
 import React, { Component } from 'react'
-import { Label, Select, Flex, Box, Slider, Samp } from 'rebass'
+import {
+  Label,
+  Select,
+  Flex,
+  Box,
+  Slider,
+  Samp,
+  Checkbox,
+  Subheading,
+} from 'rebass'
 import { Container } from 'unstated'
+import { mushroomFeatures } from './MushroomData.js'
+
+let defaultFeatureReduce = (acc, cur) => {
+  acc[cur] = false
+  return acc
+}
+
 export class SettingsContainer extends Container {
-  state = { learningRate: 0.3, numHiddenNodes: 4 }
+  state = {
+    learningRate: 0.3,
+    numHiddenNodes: 4,
+    features: Object.keys(mushroomFeatures).reduce(defaultFeatureReduce, {}),
+  }
 
   settings() {
     return {
       learningRate: this.state.learningRate,
       numHiddenNodes: this.state.numHiddenNodes,
+      features: this.state.features,
     }
   }
 }
+
 export class SettingsForm extends Component {
   constructor(props) {
     super(props)
@@ -31,7 +53,29 @@ export class SettingsForm extends Component {
     })
   }
 
+  handleFeatureChange = event => {
+    let checked = event.target.checked
+    let featureName = event.target.value
+    this.settingsContainer.setState(previousState => {
+      let features = previousState.features
+      features[featureName] = checked
+
+      return previousState
+    })
+  }
+
   render() {
+    const featureCheckboxes = Object.keys(mushroomFeatures).map(key => (
+      <Label>
+        <Checkbox
+          name="features"
+          value={key}
+          onChange={this.handleFeatureChange}
+        />
+        {key}
+      </Label>
+    ))
+
     return (
       <Flex>
         <Box width={2 / 6} px={10}>
@@ -64,6 +108,7 @@ export class SettingsForm extends Component {
             </Samp>
           </Flex>
         </Box>
+        <Box width={1}>{featureCheckboxes}</Box>
       </Flex>
     )
   }

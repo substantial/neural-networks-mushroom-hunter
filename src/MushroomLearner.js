@@ -6,7 +6,7 @@ const numOutputNodes = 1
 
 class MushroomLearner {
   async train(settings) {
-    let data = new MushroomData()
+    let data = new MushroomData(settings)
     await data.loadData()
 
     this.brain = new NeuralNetwork(
