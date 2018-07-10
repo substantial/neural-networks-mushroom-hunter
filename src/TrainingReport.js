@@ -51,7 +51,23 @@ export function TrainingReport(props) {
           </Flex>
         ))}
 
-        <Text pt={10}>Learning Rate: {learningRate}</Text>
+        <Subhead fontSize="1" pt={10} color="darken">
+          Learning Rate
+        </Subhead>
+
+        <Text pt={10}>{learningRate}</Text>
+        <Subhead fontSize="1" pt={10} color="darken">
+          Features
+        </Subhead>
+        <Flex flexWrap="wrap">
+          {Object.keys(training.settings.features)
+            .filter(key => training.settings.features[key] === true)
+            .map((feature, index) => (
+              <Box px={1} py={1 / 2} width={1} fontSize={1}>
+                {feature}
+              </Box>
+            ))}
+        </Flex>
         <Text fontSize="1" color="darken">
           {formatDistance(training.completionTime, new Date(), {
             addSuffix: true,

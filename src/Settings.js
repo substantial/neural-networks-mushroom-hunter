@@ -92,7 +92,7 @@ export class SettingsForm extends Component {
             ))}
           </Select>
         </Box>
-        <Box width={4 / 6} px={10}>
+        <Box width={4 / 6} px={10} height={1 / 4}>
           <Label>Hidden Nodes</Label>
           <Flex>
             <Slider
