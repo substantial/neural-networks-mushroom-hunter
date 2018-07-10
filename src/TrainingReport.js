@@ -33,7 +33,7 @@ export function TrainingReport(props) {
               {lossFormat.format(training.test.loss)}
             </Subhead>
             <Subhead fontSize="1" color="darken">
-              Loss
+              Test Loss
             </Subhead>
           </Box>
         </Flex>
@@ -77,13 +77,9 @@ export function TrainingReport(props) {
       <Panel.Footer>
         <Text>
           <Samp>{brain.input_nodes}</Samp> input{' '}
-          {brain.input_nodes == 1 ? 'node' : 'nodes'}{' '}
-        </Text>
-        <Text>
+          {brain.input_nodes == 1 ? 'node' : 'nodes'} /{' '}
           <Samp>{brain.hidden_nodes}</Samp> hidden{' '}
-          {brain.hidden_nodes == 1 ? 'node' : 'nodes'}{' '}
-        </Text>
-        <Text>
+          {brain.hidden_nodes == 1 ? 'node' : 'nodes'} /{' '}
           <Samp>{brain.output_nodes}</Samp> output{' '}
           {brain.output_nodes == 1 ? 'node' : 'nodes'}
         </Text>
