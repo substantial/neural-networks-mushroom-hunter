@@ -28,7 +28,7 @@ export class SettingsContainer extends Container {
     return {
       learningRate: this.state.learningRate,
       numHiddenNodes: this.state.numHiddenNodes,
-      features: this.state.features,
+      features: Object.assign({}, this.state.features),
     }
   }
 }
@@ -66,19 +66,21 @@ export class SettingsForm extends Component {
 
   render() {
     const featureCheckboxes = Object.keys(mushroomFeatures).map(key => (
-      <Label>
-        <Checkbox
-          name="features"
-          value={key}
-          onChange={this.handleFeatureChange}
-        />
-        {key}
-      </Label>
+      <Box width={1 / 4}>
+        <Label>
+          <Checkbox
+            name="features"
+            value={key}
+            onChange={this.handleFeatureChange}
+          />
+          {key}
+        </Label>
+      </Box>
     ))
 
     return (
-      <Flex>
-        <Box width={2 / 6} px={10}>
+      <Flex flexWrap="wrap" px={10}>
+        <Box width={1 / 6}>
           <Label>Learning Rate</Label>
           <Select
             name="learningRate"
@@ -91,8 +93,6 @@ export class SettingsForm extends Component {
               </option>
             ))}
           </Select>
-        </Box>
-        <Box width={4 / 6} px={10} height={1 / 4}>
           <Label>Hidden Nodes</Label>
           <Flex>
             <Slider
@@ -108,7 +108,10 @@ export class SettingsForm extends Component {
             </Samp>
           </Flex>
         </Box>
-        <Box width={1}>{featureCheckboxes}</Box>
+        <Box width={5 / 6} pl={2}>
+          <Label>Features</Label>
+          <Flex flexWrap="wrap">{featureCheckboxes}</Flex>
+        </Box>
       </Flex>
     )
   }

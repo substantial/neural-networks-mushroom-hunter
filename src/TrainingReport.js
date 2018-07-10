@@ -95,13 +95,13 @@ export function TrainingReportList() {
   return (
     <Subscribe to={[ResultsContainer]}>
       {resultsContainer => (
-        <Box>
+        <Flex flexWrap="wrap">
           {resultsContainer.state.results.map((result, index) => (
-            <Box py={10} width={1 / 2} mx="auto" key={index}>
+            <Box py={10} px={1} width={1 / 3} key={index}>
               <TrainingReport trainingReport={result} />
             </Box>
           ))}
-        </Box>
+        </Flex>
       )}
     </Subscribe>
   )
