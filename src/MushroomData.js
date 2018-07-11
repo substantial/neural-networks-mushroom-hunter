@@ -50,7 +50,6 @@ export const mushroomFeatures = {
   'gill-spacing': ['c', 'w', 'd'],
   'gill-size': ['b'],
   'gill-color': ['k', 'n', 'b', 'h', 'g', 'r', 'o', 'p', 'u', 'e', 'w', 'y'],
-  'stalk-shape': ['e'],
   'stalk-root': ['b', 'c', 'u', 'e', 'z', 'r', '?'],
   'stalk-shape': ['e', 't'],
   'stalk-surface-above-ring': ['f', 'y', 'k', 's'],
@@ -75,7 +74,7 @@ let processData = function(data, features) {
 
   // TODO: needs to return things rather than modifying state via side-effect
   for (let row of data) {
-    labels.push(row['class'] == 'p' ? 1 : 0)
+    labels.push(row['class'] === 'p' ? 1 : 0)
   }
   return [memo, labels]
 }
@@ -84,7 +83,7 @@ function oneHotEncode(row, features) {
   let encoded = []
   for (let feature of Object.keys(features)) {
     for (let col of features[feature]) {
-      let encoding = row[feature] == col ? 1 : 0
+      let encoding = row[feature] === col ? 1 : 0
       encoded.push(encoding)
     }
   }

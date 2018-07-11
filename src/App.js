@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
-import { Provider, Subscribe, Container } from 'unstated'
+import { Provider, Subscribe } from 'unstated'
 
-import { TrainingReport, TrainingReportList } from './TrainingReport.js'
+import { TrainingReportList } from './TrainingReport.js'
 import { ResultsContainer } from './ResultsContainer.js'
 import { TrainButton } from './TrainButton.js'
 
@@ -14,7 +14,11 @@ class App extends Component {
     return (
       <div className="App">
         <Rebass>
-          <Heading>Mushroom Learning 🍄</Heading>
+          <Heading>Mushroom Learning
+	    <span role="img" aria-label="mushroom">
+	      🍄
+	    </span>
+	  </Heading>
           <Lead>Safe to eat, or deadly poison?</Lead>
           <Divider />
           <Provider>
