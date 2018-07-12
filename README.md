@@ -3,6 +3,11 @@
 ## Setup
 
 ```
-yarn install
+script/dev-setup
+```
+
+## Run
+
+```
 yarn start
 ```
