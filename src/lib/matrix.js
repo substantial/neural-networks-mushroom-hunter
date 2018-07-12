@@ -127,7 +127,7 @@ class Matrix {
   }
 
   static deserialize(data) {
-    if (typeof data == 'string') {
+    if (typeof data === 'string') {
       data = JSON.parse(data)
     }
     let matrix = new Matrix(data.rows, data.cols)

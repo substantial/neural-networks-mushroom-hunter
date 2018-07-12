@@ -7,7 +7,6 @@ import {
   Slider,
   Samp,
   Checkbox,
-  Subheading,
 } from 'rebass'
 import { Container } from 'unstated'
 import { mushroomFeatures } from './MushroomData.js'

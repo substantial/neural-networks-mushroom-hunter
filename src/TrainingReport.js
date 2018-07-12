@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Provider, Subscribe, Container } from 'unstated'
+import React from 'react'
+import { Subscribe } from 'unstated'
 import { ResultsContainer } from './ResultsContainer.js'
-import { Flex, Box, Divider, Panel, Samp, Subhead, Label, Text } from 'rebass'
+import { Flex, Box, Panel, Samp, Subhead, Text } from 'rebass'
 import { formatDistance } from 'date-fns'
 
 export function TrainingReport(props) {
@@ -77,11 +77,11 @@ export function TrainingReport(props) {
       <Panel.Footer>
         <Text>
           <Samp>{brain.input_nodes}</Samp> input{' '}
-          {brain.input_nodes == 1 ? 'node' : 'nodes'} /{' '}
+          {brain.input_nodes === 1 ? 'node' : 'nodes'} /{' '}
           <Samp>{brain.hidden_nodes}</Samp> hidden{' '}
-          {brain.hidden_nodes == 1 ? 'node' : 'nodes'} /{' '}
+          {brain.hidden_nodes === 1 ? 'node' : 'nodes'} /{' '}
           <Samp>{brain.output_nodes}</Samp> output{' '}
-          {brain.output_nodes == 1 ? 'node' : 'nodes'}
+          {brain.output_nodes === 1 ? 'node' : 'nodes'}
         </Text>
       </Panel.Footer>
     </Panel>

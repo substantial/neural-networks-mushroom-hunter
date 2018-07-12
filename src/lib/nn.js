@@ -13,7 +13,7 @@ let sigmoid = new ActivationFunction(
   y => y * (1 - y)
 )
 
-let tanh = new ActivationFunction(x => Math.tanh(x), y => 1 - y * y)
+// let tanh = new ActivationFunction(x => Math.tanh(x), y => 1 - y * y)
 
 class NeuralNetwork {
   // TODO: document what a, b, c are
@@ -136,7 +136,7 @@ class NeuralNetwork {
   }
 
   static deserialize(data) {
-    if (typeof data == 'string') {
+    if (typeof data === 'string') {
       data = JSON.parse(data)
     }
     let nn = new NeuralNetwork(
