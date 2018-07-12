@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+cd "$(dirname "$0")/.." || exit 1
+DIR=$(pwd)
+
+for P in "$DIR"/script/dev-setup.d/*
+do
+  source "$P"
+done
+
+set -e
+
+function on-exit {
+  status=$?
+  if [ $status -ne 0 ]; then
+    echo
+    error "Setup wasn't successful"
+    error "Please check the logs above, follow any instructions and run $0 again"
+    exit $status
+  fi
+}
+trap "on-exit" EXIT
+
+info "Installling dev dependencies"
+info "Installling asdf plugin nodejs"
+add-asdf-plugin nodejs 'https://github.com/asdf-vm/asdf-nodejs.git'
+install-asdf-plugins
+
+info "Installing nodejs"
+asdf install
+
+info "Installing yarn"
+npm install -g yarn
+asdf reshim nodejs
+
+info "Installing node_modules"
+yarn install
+
+echo -e "${GREEN}>> You're all set up!${DEFAULT}"
